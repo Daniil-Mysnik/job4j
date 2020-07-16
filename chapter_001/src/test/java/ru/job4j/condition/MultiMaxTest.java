@@ -25,4 +25,10 @@ public class MultiMaxTest {
         assertThat(result, is(15));
     }
 
+    @Test
+    public void whenAllMatch() {
+        int result = MultiMax.max(5, 5, 5);
+        assertThat(result, is(5));
+    }
+
 }
