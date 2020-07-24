@@ -9,21 +9,27 @@ public class PointTest {
     @Test
     public void testDistance1() {
         double expected = 3;
-        double out = Point.distance(0, 0, 3, 0);
+        Point first = new Point(0, 0);
+        Point second = new Point(3, 0);
+        double out = first.distance(second);
         assertEquals(expected, out, 0.01);
     }
 
     @Test
     public void testDistance2() {
         double expected = 4;
-        double out = Point.distance(0, 4, 0, 0);
+        Point first = new Point(0, 4);
+        Point second = new Point(0, 0);
+        double out = first.distance(second);
         assertEquals(expected, out, 0.01);
     }
 
     @Test
     public void testDistance3() {
         double expected = 394.15;
-        double out = Point.distance(140, 12, 534, 23);
+        Point first = new Point(140, 12);
+        Point second = new Point(534, 23);
+        double out = first.distance(second);
         assertEquals(expected, out, 0.01);
     }
 }
