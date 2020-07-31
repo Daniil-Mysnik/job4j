@@ -20,12 +20,22 @@ public class StartUI {
             } else if (select == 4) {
                 System.out.println("=== Find item by id ====");
                 int id = input.askInt("Enter id of item: ");
-                System.out.println(tracker.findById(id));
+                Item item = tracker.findById(id);
+                if (item != null) {
+                    System.out.println(item);
+                } else {
+                    System.out.println("Item does not exist");
+                }
             } else if (select == 5) {
                 System.out.println("=== Find item by name ====");
                 String name = input.askStr("Enter name of item: ");
-                for (Item item : tracker.findByName(name)) {
-                    System.out.println(item);
+                Item[] items = tracker.findByName(name);
+                if (items.length > 0) {
+                    for (Item item : items) {
+                        System.out.println(item);
+                    }
+                } else {
+                    System.out.println("There are no such items");
                 }
             } else if (select == 6) {
                 run = false;
