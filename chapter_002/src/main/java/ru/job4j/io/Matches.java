@@ -3,15 +3,13 @@ package ru.job4j.io;
 import java.util.Scanner;
 
 public class Matches {
-    private String firstPlayer;
-    private String secondPlayer;
-    private boolean player = true;
-    private byte numberOfMatches;
+    private Player[] players;
+    private int numberOfMatches;
+    private int currentPlayer = 0;
     private static Scanner scanner = new Scanner(System.in);
 
-    public Matches(String firstPlayer, String secondPlayer, byte numberOfMatches) {
-        this.firstPlayer = firstPlayer;
-        this.secondPlayer = secondPlayer;
+    public Matches(Player[] players, int numberOfMatches) {
+        this.players = players;
         this.numberOfMatches = numberOfMatches;
     }
 
@@ -30,26 +28,61 @@ public class Matches {
         } else {
             System.out.println("Number of matches: " + 0);
         }
-        player = !player;
     }
 
-    public String checkPlayer(boolean player) {
-        if (player) {
-            return firstPlayer;
+    public void currentPlayerGetMatches() {
+        getMatches(players[currentPlayer].getName());
+        if (currentPlayer == players.length - 1)
+            currentPlayer = 0;
+        else
+            currentPlayer++;
+    }
+
+    public String getNameOfWinner() {
+        if (currentPlayer == 0)
+            return players[players.length - 1].getName();
+        return players[currentPlayer - 1].getName();
+    }
+
+    public static Player[] numberOfPlayers() {
+        System.out.println("Enter number of players:");
+        int number = scanner.nextInt();
+        Player[] players = new Player[number];
+        int i = 0;
+        while (number > 0) {
+            System.out.println("Player " + (i + 1) + " enter your name:");
+            String nameOfPlayer = scanner.next();
+            players[i] = new Player(nameOfPlayer);
+            number--;
+            i++;
         }
-        return secondPlayer;
+        return players;
     }
 
     public static void main(String[] args) {
-        System.out.println("First player, enter your name!");
-        String player1 = scanner.nextLine();
-        System.out.println("Second player, enter your name!");
-        String player2 = scanner.nextLine();
-        Matches matches = new Matches(player1, player2, (byte) 11);
+        System.out.println("Enter number of matches:");
+        int numberOfMatches = scanner.nextInt();
+        Matches matches = new Matches(numberOfPlayers(), numberOfMatches);
         while (matches.numberOfMatches > 0) {
-            matches.getMatches(matches.checkPlayer(matches.player));
+            matches.currentPlayerGetMatches();
         }
-        System.out.println("Player " + matches.checkPlayer(!matches.player) + " is WINNER!");
+        System.out.println("Player " + matches.getNameOfWinner() + " is WINNER!");
     }
 
+}
+
+class Player {
+    private String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
