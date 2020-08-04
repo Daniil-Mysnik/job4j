@@ -1,6 +1,12 @@
 package ru.job4j.tracker;
 
 public class StartUI {
+    private final Output out;
+
+    public StartUI(Output out) {
+        this.out = out;
+    }
+
     public void init(Input input, Tracker tracker, UserAction[] actions) {
         boolean run = true;
         while (run) {
@@ -12,35 +18,26 @@ public class StartUI {
     }
 
     private void showMenu(UserAction[] actions) {
-        System.out.println("Menu.");
+        out.println(new Object("Menu."));
         for (int index = 0; index < actions.length; index++) {
-            System.out.println(index + ". " + actions[index].name());
-        }
-    }
-
-    public static void deleteItem(Input input, Tracker tracker) {
-        System.out.println("=== Delete item ====");
-        int id = input.askInt("Enter id of item: ");
-        if (tracker.delete(id)) {
-            System.out.println("Success");
-        } else {
-            System.out.println("Error");
+            out.println(new Object(index + ". " + actions[index].name()));
         }
     }
 
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Tracker tracker = new Tracker();
+        Output output = new ConsoleOutput();
         UserAction[] actions = {
-                new CreateAction(),
-                new ShowAllAction(),
-                new EditAction(),
-                new DeleteAction(),
-                new FindByIdAction(),
-                new FindByNameAction(),
+                new CreateAction(output),
+                new ShowAllAction(output),
+                new EditAction(output),
+                new DeleteAction(output),
+                new FindByIdAction(output),
+                new FindByNameAction(output),
                 new ExitAction()
         };
-        new StartUI().init(input, tracker, actions);
+        new StartUI(output).init(input, tracker, actions);
     }
 
 }
