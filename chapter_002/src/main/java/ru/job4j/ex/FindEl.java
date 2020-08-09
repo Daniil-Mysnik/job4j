@@ -14,6 +14,8 @@ public class FindEl {
         return rsl;
     }
 
+
+
     public static void main(String[] args) {
         try {
             System.out.println(FindEl.indexOf(new String[] {"El1", "El2", "El3"}, "El4"));
