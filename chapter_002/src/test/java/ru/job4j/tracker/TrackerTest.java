@@ -46,10 +46,10 @@ public class TrackerTest {
         tracker.add(bug2);
         tracker.add(bug3);
         tracker.add(bug4);
-        assertThat(tracker.findAll().length, is(4));
+        assertThat(tracker.findAll().size(), is(4));
         int id = bug2.getId();
         tracker.delete(id);
-        assertThat(tracker.findAll().length, is(3));
+        assertThat(tracker.findAll().size(), is(3));
     }
 
 }
