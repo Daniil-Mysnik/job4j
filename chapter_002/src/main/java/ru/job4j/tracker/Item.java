@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Item implements Comparable<Item> {
@@ -11,6 +10,11 @@ public class Item implements Comparable<Item> {
     }
 
     public Item(String name) {
+        this.name = name;
+    }
+
+    public Item(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

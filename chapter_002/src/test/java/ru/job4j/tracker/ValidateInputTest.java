@@ -37,10 +37,10 @@ public class ValidateInputTest {
         Input in = new StubInput(
                 new String[] { "10", "0" }
         );
-        Tracker tracker = new Tracker();
+        Store memTracker = new SqlTracker();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ExitAction());
-        new StartUI(out).init(in, tracker, actions);
+        new StartUI(out).init(in, memTracker, actions);
         assertThat(out.toString(), is(
                 String.format(
                         "Menu.%n"
