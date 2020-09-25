@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -13,6 +14,13 @@ import static org.junit.Assert.*;
 
 @Ignore
 public class StartUITest {
+    @Before
+    public void clear() {
+        Store memTracker = new SqlTracker();
+        memTracker.init();
+        memTracker.deleteAll();
+    }
+
     @Test
     public void whenCreateItem() {
         Input in = new StubInput(
@@ -20,6 +28,7 @@ public class StartUITest {
         );
         Output output = new ConsoleOutput();
         Store memTracker = new SqlTracker();
+        memTracker.init();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new CreateAction(output));
         actions.add(new ExitAction());
@@ -30,6 +39,7 @@ public class StartUITest {
     @Test
     public void whenReplaceItem() {
         Store memTracker = new SqlTracker();
+        memTracker.init();
         Output output = new ConsoleOutput();
         Item item = memTracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
@@ -46,6 +56,7 @@ public class StartUITest {
     @Test
     public void whenDeleteItem() {
         Store memTracker = new SqlTracker();
+        memTracker.init();
         Output output = new ConsoleOutput();
         Item item = memTracker.add(new Item("Deleted item"));
         Input in = new StubInput(
@@ -65,6 +76,7 @@ public class StartUITest {
                 new String[] {"0"}
         );
         Store memTracker = new SqlTracker();
+        memTracker.init();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ExitAction());
         new StartUI(out).init(in, memTracker, actions);
@@ -77,7 +89,9 @@ public class StartUITest {
     @Test
     public void testFindAllAction() {
         Store memTracker = new SqlTracker();
-        memTracker.add(new Item("Item1"));
+        memTracker.init();
+        Item item = new Item("Item1");
+        memTracker.add(item);
         Input in = new StubInput(
                 new String[] {"0", "1"}
         );
@@ -91,7 +105,7 @@ public class StartUITest {
                         "0. Show all" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator() +
                         "=== Show all elements ====" + System.lineSeparator() +
-                        "Item{id=1, name='Item1'}" + System.lineSeparator() +
+                        "Item{id=" + item.getId() + ", name='Item1'}" + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0. Show all" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator()
@@ -102,7 +116,9 @@ public class StartUITest {
     @Test
     public void testFindByNameAction() {
         Store memTracker = new SqlTracker();
-        memTracker.add(new Item("Item1"));
+        memTracker.init();
+        Item item = new Item("Item1");
+        memTracker.add(item);
         memTracker.add(new Item("Item2"));
         memTracker.add(new Item("Item3"));
         Input in = new StubInput(
@@ -118,7 +134,7 @@ public class StartUITest {
                         "0. Find by name" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator() +
                         "=== Find item by name ====" + System.lineSeparator() +
-                        "Item{id=1, name='Item1'}" + System.lineSeparator() +
+                        "Item{id=" + item.getId() +", name='Item1'}" + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0. Find by name" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator()
@@ -129,11 +145,13 @@ public class StartUITest {
     @Test
     public void testFindByIdAction() {
         Store memTracker = new SqlTracker();
+        memTracker.init();
         memTracker.add(new Item("Item1"));
-        memTracker.add(new Item("Item2"));
+        Item item = new Item("Item2");
+        memTracker.add(item);
         memTracker.add(new Item("Item3"));
         Input in = new StubInput(
-                new String[] {"0", "2", "1"}
+                new String[] {"0", String.valueOf(item.getId()), "1"}
         );
         Output output = new StubOutput();
         List<UserAction> actions = new ArrayList<>();
@@ -145,7 +163,7 @@ public class StartUITest {
                         "0. Find by Id" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator() +
                         "=== Find item by id ====" + System.lineSeparator() +
-                        "Item{id=2, name='Item2'}" + System.lineSeparator() +
+                        "Item{id=" + item.getId() + ", name='Item2'}" + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0. Find by Id" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator()
@@ -160,6 +178,7 @@ public class StartUITest {
                 new String[] { "1", "0" }
         );
         Store memTracker = new SqlTracker();
+        memTracker.init();
         List<UserAction> actions = new LinkedList<>();
         actions.add(new ExitAction());
         new StartUI(out).init(in, memTracker, actions);

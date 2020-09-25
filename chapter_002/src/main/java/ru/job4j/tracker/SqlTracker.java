@@ -35,7 +35,9 @@ public class SqlTracker implements Store {
     public Item add(Item item) {
         try(PreparedStatement ps = cn.prepareStatement("insert into item(name) values (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item.getName());
-            ResultSet rs = ps.executeQuery();
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
             item.setId(rs.getInt(1));
             return item;
         } catch (SQLException e) {
@@ -61,6 +63,17 @@ public class SqlTracker implements Store {
         try(PreparedStatement ps = cn.prepareStatement("delete from item where id = ?")) {
             ps.setInt(1, Integer.parseInt(id));
             return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        try(PreparedStatement ps = cn.prepareStatement("delete from item")) {
+            ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
