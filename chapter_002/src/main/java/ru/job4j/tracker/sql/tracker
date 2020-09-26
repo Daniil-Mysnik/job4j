@@ -1,6 +1,0 @@
-create database tracker;
-
-create table item(
-    id serial primary key,
-    name varchar (255) not null
-);
