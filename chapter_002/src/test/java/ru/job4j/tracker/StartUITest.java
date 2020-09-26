@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 @Ignore
 public class StartUITest {
     @Before
+    @After
     public void clear() {
         Store memTracker = new SqlTracker();
         memTracker.init();
