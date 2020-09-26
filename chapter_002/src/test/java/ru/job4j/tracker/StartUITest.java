@@ -2,7 +2,6 @@ package ru.job4j.tracker;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,9 +10,9 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
-@Ignore
+
 public class StartUITest {
     @Before
     @After
@@ -26,7 +25,7 @@ public class StartUITest {
     @Test
     public void whenCreateItem() {
         Input in = new StubInput(
-                new String[] {"0", "Item name", "1"}
+                new String[]{"0", "Item name", "1"}
         );
         Output output = new ConsoleOutput();
         Store memTracker = new SqlTracker();
@@ -46,7 +45,7 @@ public class StartUITest {
         Item item = memTracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
         Input in = new StubInput(
-                new String[] {"0", String.valueOf(item.getId()), replacedName, "1"}
+                new String[]{"0", String.valueOf(item.getId()), replacedName, "1"}
         );
         List<UserAction> actions = new ArrayList<>();
         actions.add(new EditAction(output));
@@ -62,7 +61,7 @@ public class StartUITest {
         Output output = new ConsoleOutput();
         Item item = memTracker.add(new Item("Deleted item"));
         Input in = new StubInput(
-                new String[] {"0", String.valueOf(item.getId()), "1"}
+                new String[]{"0", String.valueOf(item.getId()), "1"}
         );
         List<UserAction> actions = new ArrayList<>();
         actions.add(new DeleteAction(output));
@@ -75,7 +74,7 @@ public class StartUITest {
     public void whenExit() {
         Output out = new StubOutput();
         Input in = new StubInput(
-                new String[] {"0"}
+                new String[]{"0"}
         );
         Store memTracker = new SqlTracker();
         memTracker.init();
@@ -95,7 +94,7 @@ public class StartUITest {
         Item item = new Item("Item1");
         memTracker.add(item);
         Input in = new StubInput(
-                new String[] {"0", "1"}
+                new String[]{"0", "1"}
         );
         Output output = new StubOutput();
         List<UserAction> actions = new ArrayList<>();
@@ -124,7 +123,7 @@ public class StartUITest {
         memTracker.add(new Item("Item2"));
         memTracker.add(new Item("Item3"));
         Input in = new StubInput(
-                new String[] {"0", "Item1", "1"}
+                new String[]{"0", "Item1", "1"}
         );
         Output output = new StubOutput();
         List<UserAction> actions = new ArrayList<>();
@@ -136,7 +135,7 @@ public class StartUITest {
                         "0. Find by name" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator() +
                         "=== Find item by name ====" + System.lineSeparator() +
-                        "Item{id=" + item.getId() +", name='Item1'}" + System.lineSeparator() +
+                        "Item{id=" + item.getId() + ", name='Item1'}" + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0. Find by name" + System.lineSeparator() +
                         "1. Exit" + System.lineSeparator()
@@ -153,7 +152,7 @@ public class StartUITest {
         memTracker.add(item);
         memTracker.add(new Item("Item3"));
         Input in = new StubInput(
-                new String[] {"0", String.valueOf(item.getId()), "1"}
+                new String[]{"0", String.valueOf(item.getId()), "1"}
         );
         Output output = new StubOutput();
         List<UserAction> actions = new ArrayList<>();
@@ -177,7 +176,7 @@ public class StartUITest {
     public void whenInvalidExit() {
         Output out = new StubOutput();
         Input in = new StubInput(
-                new String[] { "1", "0" }
+                new String[]{"1", "0"}
         );
         Store memTracker = new SqlTracker();
         memTracker.init();

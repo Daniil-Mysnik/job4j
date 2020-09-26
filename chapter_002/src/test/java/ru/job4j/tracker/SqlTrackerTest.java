@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-@Ignore
+
 public class SqlTrackerTest {
 
     public Connection init() {
